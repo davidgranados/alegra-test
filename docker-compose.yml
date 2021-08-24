@@ -21,6 +21,20 @@ services:
             - sail
         depends_on:
             - mysql
+    laravel.worker:
+        build:
+            context: ./docker/8.0-worker
+            dockerfile: Dockerfile
+        volumes:
+            - '.:/app'
+        command: bash -c "
+            composer install
+            && php artisan queue:work
+            "
+        networks:
+            - sail
+        depends_on:
+            - mysql
     mysql:
         image: 'mysql:8.0'
         ports:
