@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * App\Models\Order
  *
- * @property int $id
- * @property int $recipe_id
- * @property string $status
+ * @property int                             $id
+ * @property int                             $recipe_id
+ * @property string                          $status
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Recipe $recipe
+ * @property-read \App\Models\Recipe         $recipe
  * @method static \Illuminate\Database\Eloquent\Builder|Order newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Order newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Order query()
@@ -25,6 +25,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Order extends Model
 {
+
+    /**
+     * @var string[]
+     */
+    protected $fillable = ['recipe_id'];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
