@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OrderCreated;
 use App\Http\Resources\OrderCollection;
 use App\Models\Order;
 use App\Models\Recipe;
@@ -35,12 +36,15 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-        $quantity = (int) $request->get('quantity', 1);
+        $quantity = (int)$request->get('quantity', 1);
         $recipes = Recipe::all();
         $createdOrders = [];
         foreach (range(1, $quantity) as $_) {
             $createdOrders[] =
                 Order::create(['recipe_id' => $recipes->random()->id]);
+        }
+        foreach ($createdOrders as $order) {
+            OrderCreated::dispatch($order);
         }
         return \response(
             new OrderCollection($createdOrders),

@@ -12,3 +12,8 @@ Content-Type: application/json
 {
   "quantity": "10"
 }
+
+
+### Create Orders
+POST http://localhost/api/orders
+Accept: application/json
