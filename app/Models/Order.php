@@ -22,9 +22,15 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Order whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Order whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\StockReservation[] $reservations
+ * @property-read int|null $reservations_count
  */
 class Order extends Model
 {
+    /**
+     *
+     */
+    public const READY_STATUS = 'ready';
 
     /**
      * @var string[]
@@ -37,5 +43,16 @@ class Order extends Model
     public function recipe()
     {
         return $this->belongsTo(Recipe::class)->with('ingredients');
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(StockReservation::class);
+    }
+
+    public function markAsReady()
+    {
+        $this->status = self::READY_STATUS;
+        $this->save();
     }
 }

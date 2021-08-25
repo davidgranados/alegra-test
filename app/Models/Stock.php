@@ -22,6 +22,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Stock whereQuantity($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Stock whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\StockReservation[] $reservations
+ * @property-read int|null $reservations_count
  */
 class Stock extends Model
 {
@@ -32,4 +34,11 @@ class Stock extends Model
     {
         return $this->belongsTo(Ingredient::class);
     }
+
+    public function reservations()
+    {
+        return $this->hasMany(StockReservation::class);
+    }
+
+
 }

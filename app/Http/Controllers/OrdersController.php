@@ -37,11 +37,20 @@ class OrdersController extends Controller
     public function store(Request $request)
     {
         $quantity = (int)$request->get('quantity', 1);
-        $recipes = Recipe::all();
+        $recipe = $request->get('recipe');
         $createdOrders = [];
-        foreach (range(1, $quantity) as $_) {
-            $createdOrders[] =
-                Order::create(['recipe_id' => $recipes->random()->id]);
+        if ($recipe) {
+            foreach (range(1, $quantity) as $_) {
+                $createdOrders[] =
+                    Order::create(['recipe_id' => $recipe]);
+            }
+        } else {
+            $recipes = Recipe::all();
+            foreach (range(1, $quantity) as $_) {
+                $createdOrders[] =
+                    Order::create(['recipe_id' => $recipes->random()->id]);
+            }
+
         }
         foreach ($createdOrders as $order) {
             OrderCreated::dispatch($order);

@@ -45,23 +45,57 @@ class IngredientRecipeSeeder extends Seeder
      */
     public function run()
     {
-        $recipes = Recipe::all();
+        // 0,tomato
+        // 1,lemon
+        // 2,potato
+        // 3,rice
+        // 4,ketchup
+        // 5,lettuce
+        // 6,onion
+        // 7,cheese
+        // 8,meat
+        // 9,chicken
+        $ingredients = Ingredient::all();
 
-        foreach ($recipes as $recipe) {
-            $maxIngredientsQty = $this->faker->numberBetween(5, 10);
-            foreach (range(0, $maxIngredientsQty) as $number) {
-                $recipeIngredientQty = $this->faker->numberBetween(1, 3);
-                $ingredient = Ingredient::inRandomOrder()->first();
-                IngredientRecipe::firstOrCreate(
-                    [
-                        'recipe_id' => $recipe->id,
-                        'ingredient_id' => $ingredient->id
-                    ],
-                    [
-                        'quantity' => $recipeIngredientQty
-                    ]
-                );
-            }
-        }
+        // 1,vue salad
+        $recipe = Recipe::find(1);
+        $recipe->ingredients()->attach($ingredients[1], ['quantity' => 2]);
+        $recipe->ingredients()->attach($ingredients[2], ['quantity' => 1]);
+        $recipe->ingredients()->attach($ingredients[3], ['quantity' => 2]);
+        $recipe->ingredients()->attach($ingredients[4], ['quantity' => 1]);
+        $recipe->ingredients()->attach($ingredients[5], ['quantity' => 3]);
+        $recipe->ingredients()->attach($ingredients[6], ['quantity' => 3]);
+        $recipe->ingredients()->attach($ingredients[7], ['quantity' => 1]);
+        // 2,react salad
+        $recipe = Recipe::find(2);
+        $recipe->ingredients()->attach($ingredients[8], ['quantity' => 2]);
+        $recipe->ingredients()->attach($ingredients[9], ['quantity' => 1]);
+        $recipe->ingredients()->attach($ingredients[0], ['quantity' => 2]);
+        $recipe->ingredients()->attach($ingredients[1], ['quantity' => 3]);
+        // 3,angular salad
+        $recipe = Recipe::find(3);
+        $recipe->ingredients()->attach($ingredients[2], ['quantity' => 2]);
+        $recipe->ingredients()->attach($ingredients[3], ['quantity' => 1]);
+        $recipe->ingredients()->attach($ingredients[4], ['quantity' => 2]);
+        $recipe->ingredients()->attach($ingredients[5], ['quantity' => 3]);
+        // 4,php chicken
+        $recipe = Recipe::find(4);
+        $recipe->ingredients()->attach($ingredients[6], ['quantity' => 2]);
+        $recipe->ingredients()->attach($ingredients[7], ['quantity' => 1]);
+        $recipe->ingredients()->attach($ingredients[8], ['quantity' => 2]);
+        $recipe->ingredients()->attach($ingredients[9], ['quantity' => 3]);
+        $recipe->ingredients()->attach($ingredients[0], ['quantity' => 1]);
+        // 5,python beef
+        $recipe = Recipe::find(5);
+        $recipe->ingredients()->attach($ingredients[1], ['quantity' => 2]);
+        $recipe->ingredients()->attach($ingredients[2], ['quantity' => 1]);
+        $recipe->ingredients()->attach($ingredients[3], ['quantity' => 2]);
+        $recipe->ingredients()->attach($ingredients[4], ['quantity' => 3]);
+        $recipe->ingredients()->attach($ingredients[5], ['quantity' => 1]);
+        // 6,node fish
+        $recipe = Recipe::find(5);
+        $recipe->ingredients()->attach($ingredients[6], ['quantity' => 2]);
+        $recipe->ingredients()->attach($ingredients[7], ['quantity' => 1]);
+        $recipe->ingredients()->attach($ingredients[8], ['quantity' => 2]);
     }
 }
