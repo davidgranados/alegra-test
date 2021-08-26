@@ -15,8 +15,17 @@ class OrderCollection extends ResourceCollection
      */
     public function toArray($request): array
     {
+        $response = parent::toArray($request);
+        $response = array_map(function ($order) {
+            return [
+                'id' => $order['id'],
+                'recipe' => $order['recipe']['name'],
+                'status' => $order['status'],
+                'created_at' => $order['created_at'],
+            ];
+        }, $response);
         return [
-            'data' => $this->collection,
+            'data' => $response,
         ];
     }
 }

@@ -22,7 +22,7 @@ class OrdersController extends Controller
     public function index(Request $request)
     {
         $status = $request->get('status', 'pending');
-        $query = Order::query()->where('status', $status);
+        $query = Order::query()->with('recipe')->where('status', $status);
         return \response(
             new OrderCollection($query->get()),
             Response::HTTP_OK
