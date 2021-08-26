@@ -7,9 +7,15 @@ use App\Models\Recipe;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ *
+ */
 class RecipesController extends Controller
 {
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
     public function index()
     {
         $query = Recipe::with('ingredients');
