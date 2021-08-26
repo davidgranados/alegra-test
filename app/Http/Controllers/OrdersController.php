@@ -56,7 +56,7 @@ class OrdersController extends Controller
             OrderCreated::dispatch($order);
         }
         return \response(
-            new OrderCollection($createdOrders),
+            count($createdOrders),
             Response::HTTP_CREATED
         );
     }

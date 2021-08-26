@@ -16,6 +16,7 @@ class OrderCollection extends ResourceCollection
     public function toArray($request): array
     {
         $response = parent::toArray($request);
+
         $response = array_map(function ($order) {
             return [
                 'id' => $order['id'],
