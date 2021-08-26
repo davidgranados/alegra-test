@@ -7,8 +7,6 @@ use App\Jobs\BuyIngredients;
 use App\Jobs\PrepareOrder;
 use App\Models\Order;
 use App\Models\Recipe;
-use App\Models\Stock;
-use App\Models\StockReservation;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Event;

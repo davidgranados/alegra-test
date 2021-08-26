@@ -1,13 +1,11 @@
 ### Get Pending Orders
 GET http://localhost/api/orders
 Accept: application/json
-Content-Type: application/json
 
 
 ### Get Orders Ready
 GET http://localhost/api/orders?status=ready
 Accept: application/json
-Content-Type: application/json
 
 
 ### Create N Quantity Random Orders
@@ -33,4 +31,3 @@ Content-Type: application/json
 ### Create Random Order
 POST http://localhost/api/orders
 Accept: application/json
-Content-Type: application/json

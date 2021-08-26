@@ -1,0 +1,3 @@
+### Get Stock
+GET http://localhost/api/stock
+Accept: application/json
