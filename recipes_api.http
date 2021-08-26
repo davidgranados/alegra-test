@@ -1,0 +1,3 @@
+### Get Recipes
+GET http://localhost/api/recipes
+Accept: application/json
