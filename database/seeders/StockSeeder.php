@@ -20,7 +20,7 @@ class StockSeeder extends Seeder
             Stock::create(
                 [
                     'ingredient_id' => $ingredient->id,
-                    'quantity' => 5
+                    'quantity' => 1
                 ]
             );
         }

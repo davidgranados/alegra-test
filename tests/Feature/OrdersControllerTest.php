@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Events\OrderCreated;
+use App\Jobs\BuyIngredients;
 use App\Jobs\PrepareOrder;
 use App\Models\Order;
 use App\Models\Recipe;
@@ -59,35 +60,33 @@ class OrdersControllerTest extends TestCase
     public function test_stock_reservation()
     {
         // Given
-        $qtyStockReference = 1;
-        Stock::query()->update(['quantity' => $qtyStockReference]);
+        Stock::query()->update(['quantity' => 1]);
         $recipe = Recipe::find(1);
         // When
         $this->post(route('orders.store'), [
             'recipe' => $recipe->id
         ]);
         // Then
-        $expectedReservationsCount =
-            $recipe->ingredients()
-                ->wherePivot('quantity', '>', $qtyStockReference)
-                ->count();
         $this->assertDatabaseCount(
             with(new StockReservation())->getTable(),
-            $expectedReservationsCount
+            $recipe->ingredients()->count()
         );
     }
 
     public function test_buy_from_market_event_dispatched()
     {
+        Queue::fake();
         // Given
-        $qtyStockReference = 1;
-        Stock::query()->update(['quantity' => $qtyStockReference]);
         $recipe = Recipe::find(1);
-        // When
         $this->post(route('orders.store'), [
             'recipe' => $recipe->id
         ]);
+        $order = Order::first();
+        // When
+        $prepareJob = new PrepareOrder($order);
+        $prepareJob->handle();
         // Then
+        Queue::assertPushed(BuyIngredients::class);
     }
 
 }

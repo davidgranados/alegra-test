@@ -93,7 +93,7 @@ class IngredientRecipeSeeder extends Seeder
         $recipe->ingredients()->attach($ingredients[4], ['quantity' => 3]);
         $recipe->ingredients()->attach($ingredients[5], ['quantity' => 1]);
         // 6,node fish
-        $recipe = Recipe::find(5);
+        $recipe = Recipe::find(6);
         $recipe->ingredients()->attach($ingredients[6], ['quantity' => 2]);
         $recipe->ingredients()->attach($ingredients[7], ['quantity' => 1]);
         $recipe->ingredients()->attach($ingredients[8], ['quantity' => 2]);

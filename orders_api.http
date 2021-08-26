@@ -14,6 +14,11 @@ Content-Type: application/json
 }
 
 
-### Create Orders
+### Create Order
 POST http://localhost/api/orders
 Accept: application/json
+Content-Type: application/json
+
+{
+  "recipe": 6
+}
