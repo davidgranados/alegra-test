@@ -31,6 +31,7 @@ class Order extends Model
      *
      */
     public const READY_STATUS = 'ready';
+    public const PENDING_STATUS = 'pending';
 
     /**
      * @var string[]

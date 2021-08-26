@@ -29,6 +29,49 @@ class OrdersControllerTest extends TestCase
         $this->seed();
     }
 
+    protected function createOrders($n, $status = null)
+    {
+        $recipes = Recipe::all();
+        foreach (range(1, $n) as $_) {
+            $createdOrders[] =
+                Order::create(['recipe_id' => $recipes->random()->id]);
+        }
+        if ($status) {
+            Order::query()->update(['status' => $status]);
+        }
+    }
+
+    public function test_pending_orders_can_be_listed()
+    {
+        // Given
+        $ordersQty = 10;
+        $this->createOrders($ordersQty);
+        //When
+        $response = $this->get(route('orders.index'));
+        $response2 = $this->get(
+            route('orders.index', ['status' => Order::PENDING_STATUS]),
+        );
+        // Then
+        $response->assertStatus(Response::HTTP_OK);
+        $response2->assertStatus(Response::HTTP_OK);
+        $this->assertEquals(count($response->json()['data']), $ordersQty);
+        $this->assertEquals(count($response2->json()['data']), $ordersQty);
+    }
+
+    public function test_ready_orders_can_be_listed()
+    {
+        // Given
+        $ordersQty = 10;
+        $this->createOrders($ordersQty, Order::READY_STATUS);
+        //When
+        $response = $this->get(
+            route('orders.index', ['status' => Order::READY_STATUS]),
+        );
+        // Then
+        $response->assertStatus(Response::HTTP_OK);
+        $this->assertEquals(count($response->json()['data']), $ordersQty);
+    }
+
     public function test_orders_can_be_created()
     {
         Event::fake([
@@ -55,22 +98,6 @@ class OrdersControllerTest extends TestCase
         $response->assertStatus(Response::HTTP_CREATED);
         $this->assertDatabaseCount(with(new Order())->getTable(), 1);
         Queue::assertPushed(PrepareOrder::class);
-    }
-
-    public function test_stock_reservation()
-    {
-        // Given
-        Stock::query()->update(['quantity' => 1]);
-        $recipe = Recipe::find(1);
-        // When
-        $this->post(route('orders.store'), [
-            'recipe' => $recipe->id
-        ]);
-        // Then
-        $this->assertDatabaseCount(
-            with(new StockReservation())->getTable(),
-            $recipe->ingredients()->count()
-        );
     }
 
     public function test_buy_from_market_event_dispatched()
