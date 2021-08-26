@@ -10,17 +10,8 @@ class RecipeCollection extends ResourceCollection
 {
     public function toArray($request): array
     {
-        $response = parent::toArray($request);
-        $newResponse = [];
-        foreach ($response as $recipe) {
-            $ingredients = [];
-            foreach ($recipe['ingredients'] as $ingredient) {
-                $ingredients[$ingredient['name']] = $ingredient['pivot']['quantity'];
-            }
-            $newResponse[$recipe['name']] = $ingredients;
-        }
         return [
-            'data' => $newResponse,
+            'data' => $this->collection,
         ];
     }
 }

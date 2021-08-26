@@ -10,14 +10,8 @@ class StockCollection extends ResourceCollection
 
     public function toArray($request)
     {
-        $response = parent::toArray($request);
-        $response = array_map(function ($stock) {
-            return [
-                $stock['ingredient']['name'] => $stock['quantity'],
-            ];
-        }, $response);
         return [
-            'data' => $response,
+            'data' => $this->collection,
         ];
     }
 }
