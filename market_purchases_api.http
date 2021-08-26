@@ -1,0 +1,3 @@
+### Get Market Purchases
+GET http://localhost/api/market-purchases
+Accept: application/json

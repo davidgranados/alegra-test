@@ -3,8 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrdersController;
-use \App\Http\Controllers\StockController;
-use \App\Http\Controllers\RecipesController;
+use App\Http\Controllers\StockController;
+use App\Http\Controllers\RecipesController;
+use App\Http\Controllers\MarketPurchasesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,14 @@ Route::apiResource(
 Route::apiResource(
     'recipes',
     RecipesController::class
+)->only(
+    [
+        'index',
+    ]
+);
+Route::apiResource(
+    'market-purchases',
+    MarketPurchasesController::class
 )->only(
     [
         'index',
