@@ -98,20 +98,4 @@ class OrdersControllerTest extends TestCase
         Queue::assertPushed(PrepareOrder::class);
     }
 
-    public function test_buy_from_market_event_dispatched()
-    {
-        Queue::fake();
-        // Given
-        $recipe = Recipe::find(1);
-        $this->post(route('orders.store'), [
-            'recipe' => $recipe->id
-        ]);
-        $order = Order::first();
-        // When
-        $prepareJob = new PrepareOrder($order);
-        $prepareJob->handle();
-        // Then
-        Queue::assertPushed(BuyIngredients::class);
-    }
-
 }
